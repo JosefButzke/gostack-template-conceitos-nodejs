@@ -18,8 +18,9 @@ app.post("/repositories", (request, response) => {
 
   const repo = { 
     id: uuid(), 
-    title, 
-    techs,
+    title: title, 
+    techs: techs,
+    url: url,
     likes: 0 
   }
 
@@ -38,7 +39,7 @@ app.put("/repositories/:id", (request, response) => {
     return response.status(400).json('Repositiorio n esxiste')
   }
 
-  repositories[repoIndex] = {...repositories[repoIndex], title, url, techs}
+  repositories[repoIndex] = {...repositories[repoIndex], title: title, url: url, techs: techs}
 
   return response.json(repositories[repoIndex])
 });
@@ -49,10 +50,10 @@ app.delete("/repositories/:id", (req, res) => {
   const repoIndex = repositories.findIndex(r => r.id === id)
 
   if(repoIndex < 0){
-    return res.status(400).json('Repositiorio n esxiste')
+    return res.status(400).send()
   }
 
-  repositories.splice(repositories[repoIndex], 1)
+  repositories.splice(repoIndex, 1)
 
   return res.status(204).send()
 });
